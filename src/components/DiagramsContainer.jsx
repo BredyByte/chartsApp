@@ -27,6 +27,7 @@ function DiagramsContainer({data}) {
       payload: {
         bitcoin: {
           api: "https://financialmodelingprep.com/api/v3/historical-chart/5min/AAPL?apikey=eac2a5a15a21abfd4e60020fb2224475&limit=120",
+          num: 15
         },
         user: {
           api: "./userData.json",

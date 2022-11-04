@@ -23,8 +23,9 @@ function* getUser(api, label, dataMap) {
   }
 }
 
-function* getBitcoin(api) {
+function* getBitcoin(api, num) {
   try {
+    console.log(num)
     yield put({type: bitcoinTypes.AWAITING_BITCOIN});
     const response = yield call(fetchData, api);
     const data = response.map(i => i.close);
@@ -38,7 +39,7 @@ function* getBitcoin(api) {
 
 function* handleData({ payload }) {
   yield all([
-    fork(() => (getBitcoin(payload.bitcoin.api))),
+    fork(() => (getBitcoin(payload.bitcoin.api,payload.bitcoin.num))),
     fork(() => (getUser(payload.user.api, payload.user.label)))
   ]);
 }

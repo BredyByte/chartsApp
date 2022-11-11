@@ -39,24 +39,24 @@ function* getBitcoin(api) {
 function* handleData({ payload }) {
   yield all([
     fork(() => (getBitcoin(payload.bitcoin.api))),
-    fork(() => (getUser(payload.user.api, payload.user.label)))
+    fork(() => (getUser(payload.user.api, payload.user.label))),
   ]);
 }
 
-function* handleUser({ payload }) {
-  yield fork(() => getUser(payload.api, payload.label, payload.dataMap))
-}
+// function* handleUser({ payload }) {
+//   yield fork(() => getUser(payload.api, payload.label, payload.dataMap))
+// }
+//
+// function* handleBitcoin({ payload }) {
+//   yield fork(() => getBitcoin(payload.api))
+// }
 
-function* handleBitcoin({ payload }) {
-  yield fork(() => getBitcoin(payload.api))
-}
-
-function* dataWatcher() {
+export function* dataWatcher() {
   yield takeEvery(GET_DATA, handleData);
-  yield takeEvery(userTypes.GET_USER, handleUser);
-  yield takeEvery(bitcoinTypes.GET_BITCOIN, handleBitcoin);
+  // yield takeEvery(userTypes.GET_USER, handleUser);
+  // yield takeEvery(bitcoinTypes.GET_BITCOIN, handleBitcoin);
 }
-
-export default function* rootSaga() {
-  yield dataWatcher();
-}
+//
+// export default function* rootSaga() {
+//   yield dataWatcher();
+// }

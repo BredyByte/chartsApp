@@ -1,3 +1,8 @@
+export const appTypes = {
+  SHOW_LOADER: "SHOW_LOADER",
+  HIDE_LOADER: "HIDE_LOADER"
+}
+
 export const bitcoinTypes = {
   AWAITING_BITCOIN : "AWAITING_BITCOIN",
   SET_BITCOIN : "SET_BITCOIN",

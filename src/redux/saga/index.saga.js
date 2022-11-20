@@ -27,8 +27,15 @@ function* getBitcoin(api) {
   try {
     yield put({type: bitcoinTypes.AWAITING_BITCOIN});
     const response = yield call(fetchData, api);
-    const data = response.map(i => i.close);
-    const labels = response.map(i => (moment(i.date).calendar()));
+    const data = []
+    const labels = []
+    for(let i = 0; i < response.length; i++) {
+      data.unshift(response[i].volume);
+      labels.unshift(moment(response[i].data).calendar());
+      if(i === 20) {
+        break
+      }
+    }
     yield put(setBitcoin({data, labels}));
   } catch {
     yield put({type: bitcoinTypes.BITCOIN_REJECTED })
@@ -43,18 +50,18 @@ function* handleData({ payload }) {
   ]);
 }
 
-// function* handleUser({ payload }) {
-//   yield fork(() => getUser(payload.api, payload.label, payload.dataMap))
-// }
-//
-// function* handleBitcoin({ payload }) {
-//   yield fork(() => getBitcoin(payload.api))
-// }
+function* handleUser({ payload }) {
+  yield fork(() => getUser(payload.api, payload.label, payload.dataMap))
+}
+
+function* handleBitcoin({ payload }) {
+  yield fork(() => getBitcoin(payload.api))
+}
 
 export function* dataWatcher() {
   yield takeEvery(GET_DATA, handleData);
-  // yield takeEvery(userTypes.GET_USER, handleUser);
-  // yield takeEvery(bitcoinTypes.GET_BITCOIN, handleBitcoin);
+  yield takeEvery(userTypes.GET_USER, handleUser);
+  yield takeEvery(bitcoinTypes.GET_BITCOIN, handleBitcoin);
 }
 //
 // export default function* rootSaga() {

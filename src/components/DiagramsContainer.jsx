@@ -51,10 +51,7 @@ function DiagramsContainer({ data }) {
       }
     })
   }
-
-  if(data.bitcoin.loading || data.bitcoin.loading) {
-    return <Loader/>
-  } else return (
+ return (
     <Box sx={{
       width: "100%",
       p: "12px",

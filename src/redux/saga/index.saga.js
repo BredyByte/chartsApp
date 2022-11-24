@@ -32,7 +32,7 @@ function* getBitcoin(api) {
     for(let i = 0; i < response.length; i++) {
       data.unshift(response[i].volume);
       labels.unshift(moment(response[i].data).calendar());
-      if(i === 20) {
+      if(i === 40) {
         break
       }
     }
